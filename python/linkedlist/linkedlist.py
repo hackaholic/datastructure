@@ -6,11 +6,11 @@ class Node:
 
 class LinkedList:
     def __init__(self, node=None):
+        self.head, self.tail = None, None
         self.n = -1
         if node:
             self.head, self.tail = node, node
-            self.n = 0
-        self.head, self.tail = None, None
+            self.n += 1
 
     def insert(self, node, pos=None):
         if pos:
@@ -25,10 +25,13 @@ class LinkedList:
         self.n += 1
 
     def display(self):
-        temp = self.head
-        while(temp):
-            print(temp.value)
-            temp = temp.next
+        if self.head:
+            temp = self.head
+            while(temp):
+                print(temp.value)
+                temp = temp.next
+        else:
+            print("Empty list")
 
     def element_count(self):
         print("Total element: " + str(self.n + 1))
@@ -37,7 +40,7 @@ class LinkedList:
         cur = self.head
         if i>=0 and i<=self.n:
             if i == 0:
-                self.head = head.next
+                self.head = self.head.next
             else:
                 pre = cur
                 cur = cur.next
@@ -87,6 +90,18 @@ class LinkedList:
             cur = nex
         self.head = pre
 
+    def deleteList(self):
+        if self.head:
+            cur = self.head
+            while(cur):
+                temp = cur
+                cur = cur.next
+                del temp.value
+                temp.next = None
+            self.head = None
+        else:
+            print("empty List")
+
 def main():
     intro = """
     1 -> insert node
@@ -96,6 +111,7 @@ def main():
     5 -> Delete a Node at position
     6 -> Delete a node on value
     7 -> Reverse the linked list
+    8 -> Delete linkedlist
     99 - >  Quit"""
     obj = LinkedList()
     while True:
@@ -122,6 +138,8 @@ def main():
                 obj.delete_on_value(i)
             if n == 7:
                 obj.reverse()
+            if n == 8:
+                obj.deleteList()
                 
         except Exception as e:
             print("Input should be from listed options", e)
